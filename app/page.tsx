@@ -1,329 +1,233 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Camera, MapPin, Trophy, Recycle, Users, Star } from "lucide-react"
-import Link from "next/link"
+'use client'
 
-export default function HomePage() {
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { 
+  Leaf, 
+  Camera, 
+  Trophy, 
+  MapPin, 
+  Brain, 
+  Users,
+  ArrowRight,
+  Play
+} from 'lucide-react'
+import Link from 'next/link'
+import { WasteDetectionDemo } from '@/components/WasteDetectionDemo'
+import { Navbar } from '@/components/Navbar'
+import { Footer } from '@/components/Footer'
+
+export default function Home() {
+  const [isDemoOpen, setIsDemoOpen] = useState(false)
+
+  const features = [
+    { icon: <Camera className="w-8 h-8" />, title: "AI-Powered Detection", description: "Upload photos of waste and get instant classification with our advanced AI model." },
+    { icon: <Trophy className="w-8 h-8" />, title: "Gamified Rewards", description: "Earn Green Points for eco-friendly actions and redeem them for sustainable products." },
+    { icon: <MapPin className="w-8 h-8" />, title: "Local Vendor Mapping", description: "Find nearby recycling centers, NGOs, and municipal drop-off points." },
+    { icon: <Brain className="w-8 h-8" />, title: "Smart Guidance", description: "Get personalized disposal recommendations and educational content." },
+    { icon: <Users className="w-8 h-8" />, title: "Community Impact", description: "Join a community of eco-conscious individuals making a difference." },
+    { icon: <Leaf className="w-8 h-8" />, title: "Carbon Tracking", description: "Monitor your environmental impact and track your carbon offset." }
+  ]
+
+  const stats = [
+    { number: "50K+", label: "Users" },
+    { number: "100K+", label: "Waste Items Classified" },
+    { number: "500+", label: "Vendors Mapped" },
+    { number: "10K+", label: "Green Points Earned" }
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      {/* Navigation */}
-      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-              <Recycle className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-green-800">EcoConnect</span>
-          </div>
-          <div className="hidden md:flex items-center space-x-6">
-            <Link href="/upload" className="text-gray-600 hover:text-green-600 transition-colors">
-              Upload Waste
-            </Link>
-            <Link href="/pickup" className="text-gray-600 hover:text-green-600 transition-colors">
-              Schedule Pickup
-            </Link>
-            <Link href="/dashboard" className="text-gray-600 hover:text-green-600 transition-colors">
-              Dashboard
-            </Link>
-            <Link href="/rewards" className="text-gray-600 hover:text-green-600 transition-colors">
-              Rewards
-            </Link>
-          </div>
-          <Button asChild className="bg-green-600 hover:bg-green-700">
-            <Link href="/upload">Get Started</Link>
-          </Button>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+      <Navbar />
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-4xl mx-auto">
-          <Badge className="mb-4 bg-green-100 text-green-800 hover:bg-green-100">🌱 Join 10,000+ Eco Warriors</Badge>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Turn Trash Into{" "}
-            <span className="text-green-600 relative">
-              Treasure
-              <div className="absolute -bottom-2 left-0 right-0 h-3 bg-green-200 -rotate-1 -z-10"></div>
-            </span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Connect with local recyclers, discover AI-powered upcycling ideas, and build a waste-conscious community.
-            Start recycling today!
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-lg px-8">
-              <Link href="/upload">
-                <Camera className="w-5 h-5 mr-2" />
-                Upload Waste
+      <section className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+              Transform Waste Management with{' '}
+              <span className="eco-gradient bg-clip-text text-transparent">AI Power</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              Join India's first AI-powered, gamified waste management platform. Detect, segregate, and earn rewards while making the planet greener.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link href="/auth/signup">
+                <button className="btn-primary flex items-center gap-2">
+                  Get Started Free
+                  <ArrowRight className="w-5 h-5" />
+                </button>
               </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="text-lg px-8">
-              <Link href="/pickup">
-                <MapPin className="w-5 h-5 mr-2" />
-                Schedule Pickup
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">How EcoConnect Works</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">Simple steps to make a big environmental impact</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="text-center hover:shadow-lg transition-shadow border-green-100">
-            <CardHeader>
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Camera className="w-6 h-6 text-green-600" />
-              </div>
-              <CardTitle className="text-lg">Upload & Identify</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>
-                Take a photo of your waste item and let our AI identify it and suggest creative upcycling ideas
-              </CardDescription>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center hover:shadow-lg transition-shadow border-green-100">
-            <CardHeader>
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-6 h-6 text-blue-600" />
-              </div>
-              <CardTitle className="text-lg">Schedule Pickup</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>
-                Connect with local recyclers and schedule convenient pickup times for your waste items
-              </CardDescription>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center hover:shadow-lg transition-shadow border-green-100">
-            <CardHeader>
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Trophy className="w-6 h-6 text-purple-600" />
-              </div>
-              <CardTitle className="text-lg">Earn Rewards</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>
-                Get points for every successful recycling action and redeem them for exciting rewards
-              </CardDescription>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center hover:shadow-lg transition-shadow border-green-100">
-            <CardHeader>
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-6 h-6 text-orange-600" />
-              </div>
-              <CardTitle className="text-lg">Join Community</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>
-                Be part of a growing community of eco-conscious individuals making a difference
-              </CardDescription>
-            </CardContent>
-          </Card>
+              <button onClick={() => setIsDemoOpen(true)} className="btn-secondary flex items-center gap-2">
+                <Play className="w-5 h-5" />
+                Try AI Demo
+              </button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="bg-green-600 text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold mb-2">10,000+</div>
-              <div className="text-green-100">Active Users</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">50,000kg</div>
-              <div className="text-green-100">Waste Recycled</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">500+</div>
-              <div className="text-green-100">Pickup Partners</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">25</div>
-              <div className="text-green-100">Cities Covered</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Users Say</h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              name: "Priya Sharma",
-              location: "Mumbai",
-              text: "EcoConnect helped me turn old plastic bottles into beautiful planters. The AI suggestions are amazing!",
-              rating: 5,
-            },
-            {
-              name: "Rajesh Kumar",
-              location: "Delhi",
-              text: "Scheduling pickups is so easy. The local recyclers are reliable and the rewards system is motivating.",
-              rating: 5,
-            },
-            {
-              name: "Anita Patel",
-              location: "Bangalore",
-              text: "Love being part of this community. We've collectively recycled over 1000kg in our neighborhood!",
-              rating: 5,
-            },
-          ].map((testimonial, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">"{testimonial.text}"</p>
-                <div className="font-semibold">{testimonial.name}</div>
-                <div className="text-sm text-gray-500">{testimonial.location}</div>
-              </CardContent>
-            </Card>
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {stats.map((stat, index) => (
+            <motion.div key={index} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: index * 0.1 }}>
+              <div className="text-3xl md:text-4xl font-bold text-eco-green mb-2">{stat.number}</div>
+              <div className="text-gray-600">{stat.label}</div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
-          <p className="text-xl mb-8 text-green-100">
-            Waste isn't waste until you waste it. Be the change, one bottle at a time.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="secondary" className="text-lg px-8">
-              <Link href="/upload">
-                Upload Waste <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 border-white text-white hover:bg-white hover:text-green-600"
-            >
-              <Link href="/pickup">
-                Schedule Pickup <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
+      {/* Features Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Everything You Need for Smart Waste Management</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Our platform combines cutting-edge AI technology with gamification to make waste management engaging and effective.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} className="card hover:shadow-xl transition-shadow duration-300 text-center p-6 rounded-lg bg-white">
+                <div className="text-eco-green mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-                  <Recycle className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold">EcoConnect</span>
-              </div>
-              <p className="text-gray-400">
-                Connecting communities for a sustainable future through smart waste management.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/upload" className="hover:text-white transition-colors">
-                    Upload Waste
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pickup" className="hover:text-white transition-colors">
-                    Schedule Pickup
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/dashboard" className="hover:text-white transition-colors">
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/rewards" className="hover:text-white transition-colors">
-                    Rewards
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Help Center
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Terms of Service
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Partners</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    NGO Partners
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Recycling Centers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Waste Laws
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Environmental Impact
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 EcoConnect. All rights reserved. Made with 💚 for a sustainable future.</p>
-          </div>
-        </div>
-      </footer>
+      {/* CTA Section */}
+      <section className="py-20 eco-gradient text-center">
+        <h2 className="text-4xl font-bold text-white mb-6">Ready to Make a Difference?</h2>
+        <p className="text-xl text-green-100 mb-8">Join thousands of users already making the world greener, one waste item at a time.</p>
+        <Link href="/auth/signup">
+          <button className="bg-white text-eco-green px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+            Start Your Eco Journey Today
+          </button>
+        </Link>
+      </section>
+
+      <Footer />
+      {isDemoOpen && <WasteDetectionDemo onClose={() => setIsDemoOpen(false)} />}
     </div>
   )
 }
+
+        </div>
+      </section>
+
+      {/* Stats Section */}
+<section className="bg-green-600 text-white py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    {stats.map((stat, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+      >
+        <div className="text-3xl md:text-4xl font-bold mb-2">{stat.number}</div>
+        <div className="text-green-100">{stat.label}</div>
+      </motion.div>
+    ))}
+  </div>
+</section>
+
+          </div>
+        </div>
+      </section>
+
+{/* Features Section */}
+<section className="py-20 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-gray-900 mb-4">
+        Everything You Need for Smart Waste Management
+      </h2>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        Our comprehensive platform combines cutting-edge AI technology with 
+        gamification to make waste management engaging and effective.
+      </p>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {features.map((feature, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          className="card hover:shadow-xl transition-shadow duration-300"
+        >
+          <div className="text-eco-green mb-4">
+            {feature.icon}
+          </div>
+          <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            {feature.title}
+          </h3>
+          <p className="text-gray-600">
+            {feature.description}
+          </p>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* Testimonials Section */}
+<section className="container mx-auto px-4 py-16">
+  <div className="text-center mb-12">
+    <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Users Say</h2>
+  </div>
+
+  <div className="grid md:grid-cols-3 gap-6">
+    {[
+      {
+        name: "Priya Sharma",
+        location: "Mumbai",
+        text: "EcoConnect helped me turn old plastic bottles into beautiful planters. The AI suggestions are amazing!",
+        rating: 5,
+      },
+      {
+        name: "Rajesh Kumar",
+        location: "Delhi",
+        text: "Scheduling pickups is so easy. The local recyclers are reliable and the rewards
+
+        </div>
+      </section>
+
+      {/* CTA Section */}
+{/* Call to Action Section */}
+<section className="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
+  <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 className="text-4xl font-bold mb-6">Ready to Make a Difference?</h2>
+    <p className="text-xl mb-8 text-green-100">
+      Join thousands of users already making the world greener, one waste item at a time.
+    </p>
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <Button asChild size="lg" variant="secondary" className="text-lg px-8">
+        <Link href="/auth/signup">
+          Start Your Eco Journey <ArrowRight className="w-5 h-5 ml-2" />
+        </Link>
+      </Button>
+      <Button
+        asChild
+        size="lg"
+        variant="outline"
+        className="text-lg px-8 border-white text-white hover:bg-white hover:text-green-600"
+      >
+        <Link href="/upload">
+          Upload Waste <ArrowRight className="w-5 h-5 ml-2" />
+        </Link>
+      </Button>
+    </div>
+  </div>
+</section>
+
+{/* Footer */}
+<Footer />
+
+{/* Demo Modal */}
+{isDemoOpen && <WasteDetectionDemo onClose={() => setIsDemoOpen(false)} />}
